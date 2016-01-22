@@ -1,5 +1,7 @@
-GEM
-  remote: https://rubygems.org/
+GIT
+  remote: git://github.com/rails/rails.git
+  revision: 3e98819e20bc113343d4d4c0df614865ad5a9d3a
+  ref: 3e98819e20bc113343d4d4c0df614865ad5a9d3a
   specs:
     actioncable (5.0.0.beta1)
       actionpack (= 5.0.0.beta1)
@@ -45,10 +47,32 @@ GEM
       method_source
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    rails (5.0.0.beta1)
+      actioncable (= 5.0.0.beta1)
+      actionmailer (= 5.0.0.beta1)
+      actionpack (= 5.0.0.beta1)
+      actionview (= 5.0.0.beta1)
+      activejob (= 5.0.0.beta1)
+      activemodel (= 5.0.0.beta1)
+      activerecord (= 5.0.0.beta1)
+      activesupport (= 5.0.0.beta1)
+      bundler (>= 1.3.0, < 2.0)
+      railties (= 5.0.0.beta1)
+      sprockets-rails (>= 2.0.0)
+    railties (5.0.0.beta1)
+      actionpack (= 5.0.0.beta1)
+      activesupport (= 5.0.0.beta1)
+      method_source
+      rake (>= 0.8.7)
+      thor (>= 0.18.1, < 2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
     arel (7.0.0)
     builder (3.2.2)
     byebug (8.2.1)
-    celluloid (0.17.2)
+    celluloid (0.17.3)
       celluloid-essentials
       celluloid-extras
       celluloid-fsm
@@ -78,7 +102,7 @@ GEM
       eventmachine (~> 1.0)
       hiredis (~> 0.5.0)
     erubis (2.7.0)
-    eventmachine (1.0.8)
+    eventmachine (1.0.9.1)
     execjs (2.6.0)
     faye-websocket (0.10.2)
       eventmachine (>= 0.12.0)
@@ -103,7 +127,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.99)
     mini_portile2 (2.0.0)
-    minitest (5.8.3)
+    minitest (5.8.4)
     multi_json (1.11.2)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
@@ -112,18 +136,6 @@ GEM
       json
     rack-test (0.6.3)
       rack (>= 1.0)
-    rails (5.0.0.beta1)
-      actioncable (= 5.0.0.beta1)
-      actionmailer (= 5.0.0.beta1)
-      actionpack (= 5.0.0.beta1)
-      actionview (= 5.0.0.beta1)
-      activejob (= 5.0.0.beta1)
-      activemodel (= 5.0.0.beta1)
-      activerecord (= 5.0.0.beta1)
-      activesupport (= 5.0.0.beta1)
-      bundler (>= 1.3.0, < 2.0)
-      railties (= 5.0.0.beta1)
-      sprockets-rails (>= 2.0.0)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -132,13 +144,7 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
-    railties (5.0.0.beta1)
-      actionpack (= 5.0.0.beta1)
-      activesupport (= 5.0.0.beta1)
-      method_source
-      rake (>= 0.8.7)
-      thor (>= 0.18.1, < 2.0)
-    rake (10.4.2)
+    rake (10.5.0)
     redis (3.2.2)
     sass (3.4.21)
     sass-rails (5.0.4)
@@ -185,7 +191,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   puma
-  rails (>= 5.0.0.beta1, < 5.1)
+  rails (>= 5.0.0.beta1, < 5.1)!
   sass-rails (~> 5.0)
   spring
   sqlite3

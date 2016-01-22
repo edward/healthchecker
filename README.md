@@ -1,4 +1,4 @@
-# Healthcheck
+# Healthchecker
 
 This app lets your team perform health checks with low friction:
 
