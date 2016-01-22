@@ -1,4 +1,5 @@
 class Healthcheck < ApplicationRecord
+  has_many :opinions
   before_validation :handle
 
   validates! :handle, presence: true

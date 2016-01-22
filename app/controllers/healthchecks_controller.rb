@@ -1,5 +1,6 @@
 class HealthchecksController < ApplicationController
   before_action :set_healthcheck, only: [:show]
+  before_action :set_opinion_handle, only: [:show]
 
   # GET /healthchecks
   def index
@@ -7,6 +8,7 @@ class HealthchecksController < ApplicationController
 
   # GET /healthchecks/1
   def show
+    @opinion = @healthcheck.opinions.find_or_initialize_by(handle: @opinion_handle)
   end
 
   # POST /healthchecks
@@ -21,8 +23,13 @@ class HealthchecksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_healthcheck
-      @healthcheck = Healthcheck.where(handle: params[:handle]).first!
-    end
+
+  def set_healthcheck
+    @healthcheck = Healthcheck.where(handle: params[:handle]).first!
+  end
+
+  def set_opinion_handle
+    session[:opinion_handle] ||= SecureRandom.uuid
+    @opinion_handle = session[:opinion_handle]
+  end
 end

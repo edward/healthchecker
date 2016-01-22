@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :opinions, only: [:create, :update, :destroy]
   root controller: :healthchecks, action: :index
 
   # make this work: healthchecker.edward.bio/123-uuid-LKJLKJ

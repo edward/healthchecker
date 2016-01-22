@@ -7,6 +7,23 @@
 
 <p>A healthcheck is a powerful thing.</p>
 
+<p>Submitted opinions on this healthcheck: <%= @healthcheck.opinions.count %></p>
+
+<p>Submit your own opinion:</p>
+
+<p>
+  <%= form_for @opinion, remote: true do |form| %>
+    <%= form.label :champion %>
+    <%= form.range_field :champion, in: 1..3 %>
+    <br>
+    <%= form.hidden_field :handle %>
+    <%= form.hidden_field :healthcheck_id %>
+    <%= form.submit %>
+  <% end %>
+</p>
+
+<p><%= button_to "Destroy this opinion; I’ll do it on another machine", opinion_path(@opinion, handle: @opinion.handle), method: 'delete' %></p>
+
 <hr>
 
 <p><%= Wisdom.sample %></p>

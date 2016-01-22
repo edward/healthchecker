@@ -11,13 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122154234) do
+ActiveRecord::Schema.define(version: 20160122180119) do
 
   create_table "healthchecks", force: :cascade do |t|
     t.string   "handle",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["handle"], name: "index_healthchecks_on_handle"
+  end
+
+  create_table "opinions", force: :cascade do |t|
+    t.string   "handle"
+    t.integer  "champion"
+    t.integer  "team"
+    t.integer  "alignment"
+    t.integer  "keeping_score"
+    t.integer  "transparency"
+    t.integer  "progress"
+    t.integer  "quality"
+    t.integer  "scrappy"
+    t.text     "comments"
+    t.integer  "healthcheck_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
 end
