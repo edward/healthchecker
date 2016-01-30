@@ -1,20 +1,49 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Handle:</strong>
-  <%= @healthcheck.handle %>
+  Pass this around to your compadres in healthchecking: <br>
+  <%= text_field_tag nil, request.url, readonly: true, size: 60 %>
 </p>
 
-<p>A healthcheck is a powerful thing.</p>
+<p>This many opinions have been submitted: <%= @healthcheck.opinions.count %></p>
 
-<p>Submitted opinions on this healthcheck: <%= @healthcheck.opinions.count %></p>
+<p class="opinion-avatars">
+  <%
+    def colour_chunks(handle)
+      raw_colour_chunks = handle.split('-').map { |chunk| chunk.to_i(16) }
+      colours = raw_colour_chunks.map do |raw_colour_chunk|
+        colour = raw_colour_chunk % (256*256*256)
+        {
+          red: (colour>>16) & 0x0ff,
+          green: (colour>>8) & 0x0ff,
+          blue: (colour) & 0x0ff,
+        }
+      end
+    end
+  %>
+  <% @healthcheck.opinions.select(&:persisted?).each do |opinion| %>
+    <% colour_chunks(opinion.handle).each do |colour| %>
+      <svg width="20" height="10" style="padding: 0">
+        <rect width="20" height="10" style="fill:rgb(<%= "#{colour[:red]}, #{colour[:green]}, #{colour[:blue]}" %>);stroke-width:3;stroke:rgb(0,0,0)" />
+      </svg>
+    <% end %>
+  <% end %>
+</p>
 
 <p>Submit your own opinion:</p>
 
 <p>
-  <%= form_for @opinion, remote: true do |form| %>
-    <%= form.label :champion %>
-    <%= form.range_field :champion, in: 1..3 %>
+  <%= form_for @opinion do |form| %>
+    <% [:champion, :team, :alignment, :keeping_score, :transparency, :progress, :quality, :scrappy].each do |dimension| %>
+      <%= form.label dimension %>
+      <div name="opinion[<%= dimension %>]" style="height: 3rem; padding-top: 1rem">
+        <span class="huge" data-rating-param="<%= dimension %>" data-rating-value="1"><%= Emoji::RED.sample %></span>
+        <span class="huge" data-rating-param="<%= dimension %>" data-rating-value="2"><%= Emoji::YELLOW.sample %></span>
+        <span class="huge" data-rating-param="<%= dimension %>" data-rating-value="3"><%= Emoji::GREEN.sample %></span>
+      </div>
+      <%= form.hidden_field dimension %>
+    <% end %>
+
     <br>
     <%= form.hidden_field :handle %>
     <%= form.hidden_field :healthcheck_id %>
@@ -22,7 +51,15 @@
   <% end %>
 </p>
 
-<p><%= button_to "Destroy this opinion; I’ll do it on another machine", opinion_path(@opinion, handle: @opinion.handle), method: 'delete' %></p>
+<% if @opinion.persisted? %>
+  <p>
+    <%= button_to "Destroy this opinion; I’ll do it on another machine", opinion_path(@opinion, handle: @opinion.handle), method: 'delete' %>
+  </p>
+<% else %>
+  <p>
+    <%= button_tag "Destroy this opinion; I’ll do it on another machine", disabled: true %>
+  </p>
+<% end %>
 
 <hr>
 

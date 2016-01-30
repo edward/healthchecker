@@ -4,9 +4,17 @@ class HealthchecksController < ApplicationController
 
   # GET /healthchecks
   def index
+    @healthchecks_opined_on = healthchecks_opined
+  end
+
+  def healthchecks_opined
+    if opinion_handle = cookies.signed[:opinion_handle]
+      Healthcheck.joins(:opinions).where(opinions: {handle: opinion_handle}).order(created_at: :desc)
+    end
   end
 
   # GET /healthchecks/1
+  # GET /h/lkj24lkj23lkj
   def show
     @opinion = @healthcheck.opinions.find_or_initialize_by(handle: @opinion_handle)
   end
@@ -29,7 +37,7 @@ class HealthchecksController < ApplicationController
   end
 
   def set_opinion_handle
-    session[:opinion_handle] ||= SecureRandom.uuid
-    @opinion_handle = session[:opinion_handle]
+    cookies.signed[:opinion_handle] ||= SecureRandom.uuid
+    @opinion_handle = cookies.signed[:opinion_handle]
   end
 end

@@ -2,8 +2,17 @@
 
 <h1>Healthchecks</h1>
 
-<p><%= Wisdom.sample %></p>
-
-<br>
+<p>You know why you’re here.</p>
 
 <%= button_to "New healthcheck", action: "create" %>
+
+<% if @healthchecks_opined_on.present? %>
+  <p>Healthchecks you’ve opined on:</p>
+  <p>
+    <ul>
+      <% @healthchecks_opined_on.each do |healthcheck| %>
+        <li><%= healthcheck.created_at.to_s(:long_ordinal) %> <%= link_to healthcheck.handle, healthcheck_path(handle: healthcheck.handle) %></li>
+      <% end %>
+    </ul>
+  </p>
+<% end %>

@@ -7,13 +7,14 @@ class OpinionsController < ApplicationController
     if @opinion.save
       redirect_to healthcheck_path(handle: @opinion.healthcheck.handle), notice: 'Opinion added.'
     else
-      redirect_to @opinion.healthcheck, notice: 'Opinion needs more.'
+      redirect_to healthcheck_path(handle: @opinion.healthcheck.handle), notice: "Opinion needs more: #{@opinion.errors.full_messages}"
     end
   end
 
   def update
     if @opinion.update(opinion_params)
-      redirect_to healthcheck_path(handle: @opinion.healthcheck.handle), notice: 'Opinion updated.'
+      # redirect_to healthcheck_path(handle: @opinion.healthcheck.handle), notice: 'Opinion updated.'
+      redirect_to "/h/#{@opinion.healthcheck.handle}", notice: 'Opinion updated.'
     else
       redirect_to @opinion.healthcheck, notice: 'Opinion needs more.'
     end
@@ -22,7 +23,7 @@ class OpinionsController < ApplicationController
   # DELETE /opinions/1
   # DELETE /opinions/1.json
   def destroy
-    @opinion.destroy
+    @opinion.destroy if @opinion.handle = cookies.signed[:opinion_handle]
     redirect_to root_path, notice: 'Opinion was removed.'
   end
 

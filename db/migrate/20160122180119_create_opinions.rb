@@ -1,7 +1,7 @@
 class CreateOpinions < ActiveRecord::Migration[5.0]
   def change
     create_table :opinions do |t|
-      t.string :handle
+      t.string :handle, index: true
       t.integer :champion
       t.integer :team
       t.integer :alignment

@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20160122180119) do
     t.integer  "healthcheck_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["handle"], name: "index_opinions_on_handle"
+    t.index ["healthcheck_id"], name: "index_opinions_on_healthcheck_id"
   end
 
 end
