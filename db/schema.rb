@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20160122180119) do
 
   create_table "healthchecks", force: :cascade do |t|
     t.string   "handle",     null: false
+    t.boolean  "locked"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["handle"], name: "index_healthchecks_on_handle"

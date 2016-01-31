@@ -5,16 +5,15 @@ class OpinionsController < ApplicationController
     @opinion = Opinion.new(opinion_params)
 
     if @opinion.save
-      redirect_to healthcheck_path(handle: @opinion.healthcheck.handle), notice: 'Opinion added.'
+      redirect_to healthcheck_handle_path(handle: @opinion.healthcheck.handle), notice: 'Opinion added.'
     else
-      redirect_to healthcheck_path(handle: @opinion.healthcheck.handle), notice: "Opinion needs more: #{@opinion.errors.full_messages}"
+      redirect_to healthcheck_handle_path(handle: @opinion.healthcheck.handle), notice: "Opinion needs more: #{@opinion.errors.full_messages}"
     end
   end
 
   def update
     if @opinion.update(opinion_params)
-      # redirect_to healthcheck_path(handle: @opinion.healthcheck.handle), notice: 'Opinion updated.'
-      redirect_to "/h/#{@opinion.healthcheck.handle}", notice: 'Opinion updated.'
+      redirect_to healthcheck_handle_path(handle: @opinion.healthcheck.handle), notice: 'Opinion updated.'
     else
       redirect_to @opinion.healthcheck, notice: 'Opinion needs more.'
     end

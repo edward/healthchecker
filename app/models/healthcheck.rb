@@ -1,6 +1,7 @@
 class Healthcheck < ApplicationRecord
   has_many :opinions
   before_validation :handle
+  after_update_commit { HealthcheckBroadcastJob.perform_later self }
 
   validates! :handle, presence: true
 

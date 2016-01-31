@@ -11,7 +11,7 @@
   <p>
     <ul>
       <% @healthchecks_opined_on.each do |healthcheck| %>
-        <li><%= healthcheck.created_at.to_s(:long_ordinal) %> <%= link_to healthcheck.handle, healthcheck_path(handle: healthcheck.handle) %></li>
+        <li><%= healthcheck.created_at.to_s(:long_ordinal) %> <%= link_to healthcheck.handle, healthcheck_handle_path(handle: healthcheck.handle) %></li>
       <% end %>
     </ul>
   </p>

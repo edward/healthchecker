@@ -32,3 +32,8 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## License
+
+MIT
+Copyright Edward Ocampo-Gooding 2016

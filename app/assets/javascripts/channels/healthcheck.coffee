@@ -1,6 +1,6 @@
 healthcheck_handle = $(window.location.pathname.split('/')).get(-1)
 
-App.opinion = App.cable.subscriptions.create {channel: "OpinionChannel", healthcheck_handle: healthcheck_handle},
+App.healthcheck = App.cable.subscriptions.create { channel: "HealthcheckChannel", healthcheck_handle: healthcheck_handle },
   connected: ->
     # Called when the subscription is ready for use on the server
 
@@ -9,8 +9,4 @@ App.opinion = App.cable.subscriptions.create {channel: "OpinionChannel", healthc
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
-    $('.opinion-avatars .placeholder').hide()
-    $('.opinion-avatars').append(data['message'])
-
-  # speak: ->
-  #   @perform 'speak'
+    alert('shit is locked')

@@ -1,5 +1,5 @@
 class HealthchecksController < ApplicationController
-  before_action :set_healthcheck, only: [:show]
+  before_action :set_healthcheck, only: [:show, :lock]
   before_action :set_opinion_handle, only: [:show]
 
   # GET /healthchecks
@@ -24,10 +24,15 @@ class HealthchecksController < ApplicationController
     @healthcheck = Healthcheck.new
 
     if @healthcheck.save
-      redirect_to "/h/#{@healthcheck.handle}", notice: 'Healthcheck created.'
+      redirect_to healthcheck_handle_path(handle: @healthcheck.handle), notice: 'Healthcheck created.'
     else
       render :index
     end
+  end
+
+  def lock
+    @healthcheck.update(locked: true)
+    redirect_to healthcheck_handle_path(handle: @healthcheck.handle)
   end
 
   private

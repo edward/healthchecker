@@ -5,41 +5,50 @@
   <%= text_field_tag nil, request.url, readonly: true, size: 60 %>
 </p>
 
-<p>This many opinions have been submitted: <%= @healthcheck.opinions.count %></p>
+<p>Participants so far:</p>
 
 <p class="opinion-avatars">
-  <%
-    def colour_chunks(handle)
-      raw_colour_chunks = handle.split('-').map { |chunk| chunk.to_i(16) }
-      colours = raw_colour_chunks.map do |raw_colour_chunk|
-        colour = raw_colour_chunk % (256*256*256)
-        {
-          red: (colour>>16) & 0x0ff,
-          green: (colour>>8) & 0x0ff,
-          blue: (colour) & 0x0ff,
-        }
-      end
-    end
-  %>
-  <% @healthcheck.opinions.select(&:persisted?).each do |opinion| %>
-    <% colour_chunks(opinion.handle).each do |colour| %>
-      <svg width="20" height="10" style="padding: 0">
-        <rect width="20" height="10" style="fill:rgb(<%= "#{colour[:red]}, #{colour[:green]}, #{colour[:blue]}" %>);stroke-width:3;stroke:rgb(0,0,0)" />
-      </svg>
-    <% end %>
+  <% opinions = @healthcheck.opinions.select(&:persisted?) %>
+  <% if opinions.empty? %>
+    <span class="placeholder">Nobody yet. Boldly go where no one has opined before.</span>
+  <% else %>
+    <%= render opinions %>
   <% end %>
 </p>
 
-<p>Submit your own opinion:</p>
+<%= render @healthcheck %>
+
+<p>Your own opinion on this project’s health:</p>
 
 <p>
   <%= form_for @opinion do |form| %>
+
+  <style>
+    input[type="radio"] {
+        position:absolute;
+        clip: rect(0,0,0,0);
+        clip: rect(0 0 0 0);
+    }
+
+    input[type="radio"] + label::before {
+        content: "<%= Emoji::RED.sample %>";
+    }
+
+    input[type="radio"]:checked + label::before {
+        content: "<%= Emoji::RED.sample %>";
+    }
+  </style>
+
     <% [:champion, :team, :alignment, :keeping_score, :transparency, :progress, :quality, :scrappy].each do |dimension| %>
       <%= form.label dimension %>
+      <%= form.radio_button dimension, 1 %><%= form.label dimension, "", value: 1 %>
+      <%= form.radio_button dimension, 2 %><%= form.label dimension, "", value: 2 %>
+      <%= form.radio_button dimension, 3 %><%= form.label dimension, "", value: 3 %>
+
       <div name="opinion[<%= dimension %>]" style="height: 3rem; padding-top: 1rem">
-        <span class="huge" data-rating-param="<%= dimension %>" data-rating-value="1"><%= Emoji::RED.sample %></span>
-        <span class="huge" data-rating-param="<%= dimension %>" data-rating-value="2"><%= Emoji::YELLOW.sample %></span>
-        <span class="huge" data-rating-param="<%= dimension %>" data-rating-value="3"><%= Emoji::GREEN.sample %></span>
+        <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="1"><%= Emoji::RED.sample %></span></button>
+        <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="2"><%= Emoji::YELLOW.sample %></span></button>
+        <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="3"><%= Emoji::GREEN.sample %></span></button>
       </div>
       <%= form.hidden_field dimension %>
     <% end %>
@@ -47,11 +56,11 @@
     <br>
     <%= form.hidden_field :handle %>
     <%= form.hidden_field :healthcheck_id %>
-    <%= form.submit %>
+    <%= form.submit disabled: @healthcheck.locked? %>
   <% end %>
 </p>
 
-<% if @opinion.persisted? %>
+<% if @opinion.persisted? && !@healthcheck.locked? %>
   <p>
     <%= button_to "Destroy this opinion; I’ll do it on another machine", opinion_path(@opinion, handle: @opinion.handle), method: 'delete' %>
   </p>
@@ -65,4 +74,4 @@
 
 <p><%= Wisdom.sample %></p>
 
-<%= link_to 'Back', healthchecks_path %>
+<%= link_to 'Back', root_path %>

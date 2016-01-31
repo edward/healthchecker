@@ -1,0 +1,7 @@
+<% colour_chunks(opinion.handle).each do |colour| %>
+  <svg width="20" height="10" style="padding: 0">
+    <rect width="20" height="10" style="fill:rgb(<%= "#{colour[:red]}, #{colour[:green]}, #{colour[:blue]}" %>);stroke-width:3;stroke:rgb(0,0,0)" />
+  </svg>
+<% end %>
+
+<!-- Alternative idea: use non-red/yellow/green emojis as avatars with a unique backing badge colour chosen from the giant number module 256*256*256 -->

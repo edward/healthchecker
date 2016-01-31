@@ -1,0 +1,7 @@
+<p>If you think this healthcheck has all the opinions it’s going to get, hit this button and the anonymous results will appear. Future changes to this healthcheck will not be possible.</p>
+
+<p>
+  <%= button_to "HEALTHCHECK TEAM READY", lock_healthcheck_handle_path(handle: healthcheck.handle), method: :put, disabled: healthcheck.locked?, data: {confirm: "Are you sure this healthcheck has everyone’s input?"} %>
+</p>
+
+<p>Healthcheck is currently: <%= healthcheck.locked? ? "locked" : "unlocked" %></p>
