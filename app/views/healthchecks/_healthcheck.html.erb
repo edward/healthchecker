@@ -5,3 +5,20 @@
 </p>
 
 <p>Healthcheck is currently: <%= healthcheck.locked? ? "locked" : "unlocked" %></p>
+
+<% if healthcheck.finished? %>
+  <p>Here’s the summary of the scores:</p>
+  <p>
+    <% results = healthcheck.results %>
+    <% Healthcheck::DIMENSIONS.each do |dimension| %>
+      <table>
+        <tr>
+          <th>Dimension</th><th>Average</th><th>Lowest</th>
+        </tr>
+        <tr>
+          <td><%= dimension.capitalize %></td><td><%= results[:average][dimension] %></td><td><%= results[:lowest][dimension] %></td>
+        </tr>
+      </table>
+    <% end %>
+  </p>
+<% end %>

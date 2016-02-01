@@ -23,34 +23,36 @@
 <p>
   <%= form_for @opinion do |form| %>
 
-  <style>
-    input[type="radio"] {
-        position:absolute;
-        clip: rect(0,0,0,0);
-        clip: rect(0 0 0 0);
-    }
+    <!-- <style>
+      input[type="radio"] {
+          position:absolute;
+          clip: rect(0,0,0,0);
+          clip: rect(0 0 0 0);
+      }
 
-    input[type="radio"] + label::before {
-        content: "<%= Emoji::RED.sample %>";
-    }
+      input[type="radio"] + label::before {
+          content: "<%= Emoji::RED.sample %>";
+      }
 
-    input[type="radio"]:checked + label::before {
-        content: "<%= Emoji::RED.sample %>";
-    }
-  </style>
+      input[type="radio"]:checked + label::before {
+          content: "<%= Emoji::RED.sample %>";
+      }
+    </style> -->
 
-    <% [:champion, :team, :alignment, :keeping_score, :transparency, :progress, :quality, :scrappy].each do |dimension| %>
-      <%= form.label dimension %>
-      <%= form.radio_button dimension, 1 %><%= form.label dimension, "", value: 1 %>
-      <%= form.radio_button dimension, 2 %><%= form.label dimension, "", value: 2 %>
-      <%= form.radio_button dimension, 3 %><%= form.label dimension, "", value: 3 %>
-
-      <div name="opinion[<%= dimension %>]" style="height: 3rem; padding-top: 1rem">
-        <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="1"><%= Emoji::RED.sample %></span></button>
-        <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="2"><%= Emoji::YELLOW.sample %></span></button>
-        <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="3"><%= Emoji::GREEN.sample %></span></button>
+    <% Healthcheck::DIMENSIONS.each do |dimension| %>
+      <div style="margin-bottom: 1rem">
+        <%= form.label dimension %>
+  <!--       <%= form.radio_button dimension, 1 %><%= form.label dimension, "", value: 1 %>
+        <%= form.radio_button dimension, 2 %><%= form.label dimension, "", value: 2 %>
+        <%= form.radio_button dimension, 3 %><%= form.label dimension, "", value: 3 %>
+   -->
+        <div name="opinion[<%= dimension %>]" style="height: 3rem; padding-top: 1rem">
+          <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="1"><%= Emoji::RED.sample %></span></button>
+          <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="2"><%= Emoji::YELLOW.sample %></span></button>
+          <button class="opinion <%= dimension %>" type="button"><span class="huge" data-rating-param="<%= dimension %>" data-rating-value="3"><%= Emoji::GREEN.sample %></span></button>
+        </div>
+        <%= form.hidden_field dimension %>
       </div>
-      <%= form.hidden_field dimension %>
     <% end %>
 
     <br>

@@ -34,6 +34,6 @@ class OpinionsController < ApplicationController
   end
 
   def opinion_params
-    params.require(:opinion).permit(:handle, :healthcheck_id, :champion)
+    params.require(:opinion).permit(:handle, :healthcheck_id, *Healthcheck::DIMENSIONS)
   end
 end
